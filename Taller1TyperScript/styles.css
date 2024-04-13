@@ -1,0 +1,9 @@
+.title{
+    background-color: darkcyan;
+}
+.hide{
+    display: none;
+}
+.show{
+    display: block;
+}

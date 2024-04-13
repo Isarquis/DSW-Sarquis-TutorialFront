@@ -1,12 +1,4 @@
-import { Serie } from "./serie.js";
-
-
-export class Data{
-    constructor(public series: Serie[]){
-
-    }
-}
-
+import { Serie } from './serie.js';
 export const series = [
     new Serie (1,"Breaking Bad","AMC", 5,"Set and filmed in Albuquerque, New Mexico, the series tells the story of Walter White, a struggling and depressed high school chemistry teacher who is diagnosed with lung cancer" ,
     "https://www.amc.com/shows/breaking-bad","https://i.imgur.com/GGje0vc.jpg") ,
@@ -26,4 +18,40 @@ export const series = [
     new Serie (6, "A Very English Scandal", "BBC", 2, "A Very English Scandal is a fact-based three-part British television comedy-drama miniseries based on John Preston's book of the same name.",
         "https://www.bbc.co.uk/programmes/p065smy4", "https://i.imgur.com/D4y3DrQ.jpg"),
   ];
-   
+let serieTable: HTMLElement= document.getElementById("serie")!;
+let promedioTable: HTMLElement= document.getElementById("promedio")!;
+
+mostrarDatosSerie(series);
+mostrarEstadisticas(series);
+function mostrarDatosSerie(series:Serie[]):void{
+    let tbodySerie: HTMLElement= document.createElement("tbody");
+    for(let serie of series){
+        let trElement:HTMLElement=document.createElement("tr");
+        trElement.innerHTML=
+        
+        `<tr>        
+        <td>${serie.id}</td>
+        <td><a>${serie.nombre}</a></td>
+        <td>${serie.channel}</td>
+        <td>${serie.seasons}</td></tr>`
+        tbodySerie.appendChild(trElement);
+    }
+    serieTable.appendChild(tbodySerie);
+}
+function mostrarEstadisticas(series: Serie[]):void{
+    let promedio:number=promedioTemporadas(series);
+    let trElement:HTMLElement=document.createElement("tr");
+    trElement.innerHTML=`<td><b> Seasons average:</b></td><td>${promedio}</td>`;
+    promedioTable.appendChild(trElement);
+}
+function promedioTemporadas(series: Serie[]):number{
+    let totalTemporadas:number=0;
+    for(let index=0; index<series.length;index++){
+        let serie: Serie= series[index];
+        totalTemporadas+=serie.seasons;
+
+    }
+    return totalTemporadas/series.length;
+}
+
+

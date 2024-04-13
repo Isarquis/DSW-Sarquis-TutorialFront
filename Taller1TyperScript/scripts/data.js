@@ -1,11 +1,4 @@
-import { Serie } from "./serie.js";
-var Data = /** @class */ (function () {
-    function Data(series) {
-        this.series = series;
-    }
-    return Data;
-}());
-export { Data };
+import { Serie } from './serie.js';
 export var series = [
     new Serie(1, "Breaking Bad", "AMC", 5, "Set and filmed in Albuquerque, New Mexico, the series tells the story of Walter White, a struggling and depressed high school chemistry teacher who is diagnosed with lung cancer", "https://www.amc.com/shows/breaking-bad", "https://i.imgur.com/GGje0vc.jpg"),
     new Serie(2, "Orange Is the New Black", "Netflix", 6, "The series begins revolving around Piper Chapman, a woman in her thirties living in New York City who is sentenced to 15 months in Litchfield Penitentiary", "https://www.netflix.com/co/title/70242311", "https://i.imgur.com/EvKe48G.jpg"),
@@ -14,3 +7,32 @@ export var series = [
     new Serie(5, "Sherlock", "BBC", 4, "Sherlock depicts consulting detective Sherlock Holmes (Benedict Cumberbatch) solving various mysteries in modern-day London. Holmes is assisted by his flatmate and friend, Dr John Watson (Martin Freeman), who has returned from military service in Afghanistan with the Royal Army Medical Corps", "https://www.bbc.co.uk/programmes/b018ttws", "https://i.imgur.com/02B7qhj.jpg"),
     new Serie(6, "A Very English Scandal", "BBC", 2, "A Very English Scandal is a fact-based three-part British television comedy-drama miniseries based on John Preston's book of the same name.", "https://www.bbc.co.uk/programmes/p065smy4", "https://i.imgur.com/D4y3DrQ.jpg"),
 ];
+var serieTable = document.getElementById("serie");
+var promedioTable = document.getElementById("promedio");
+mostrarDatosSerie(series);
+mostrarEstadisticas(series);
+function mostrarDatosSerie(series) {
+    var tbodySerie = document.createElement("tbody");
+    for (var _i = 0, series_1 = series; _i < series_1.length; _i++) {
+        var serie = series_1[_i];
+        var trElement = document.createElement("tr");
+        trElement.innerHTML =
+            "<tr>        \n        <td>".concat(serie.id, "</td>\n        <td><a>").concat(serie.nombre, "</a></td>\n        <td>").concat(serie.channel, "</td>\n        <td>").concat(serie.seasons, "</td></tr>");
+        tbodySerie.appendChild(trElement);
+    }
+    serieTable.appendChild(tbodySerie);
+}
+function mostrarEstadisticas(series) {
+    var promedio = promedioTemporadas(series);
+    var trElement = document.createElement("tr");
+    trElement.innerHTML = "<td><b> Seasons average:</b></td><td>".concat(promedio, "</td>");
+    promedioTable.appendChild(trElement);
+}
+function promedioTemporadas(series) {
+    var totalTemporadas = 0;
+    for (var index = 0; index < series.length; index++) {
+        var serie = series[index];
+        totalTemporadas += serie.seasons;
+    }
+    return totalTemporadas / series.length;
+}
